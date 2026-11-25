@@ -30,7 +30,45 @@
         radial-gradient(ellipse at 8% 52%, rgba(75, 39, 11, .16), transparent 35%),
         linear-gradient(180deg, #130b06 0%, #090807 52%, #050505 100%);
     }
-    .page { width: min(100%, 760px); margin: 0 auto; text-align: center; }
+    .ambient-scene {
+      position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0;
+      perspective: 900px; isolation: isolate;
+    }
+    .ambient-glow {
+      position: absolute; width: min(72vw, 620px); aspect-ratio: 1; border-radius: 50%;
+      left: 50%; top: 46%; transform: translate(-50%,-50%);
+      background: radial-gradient(circle, rgba(224,146,28,.17) 0%, rgba(153,83,15,.08) 36%, transparent 70%);
+      filter: blur(18px); animation: ambientBreath 7s ease-in-out infinite alternate;
+    }
+    .orbit {
+      position: absolute; left: 50%; top: 48%; border: 1px solid rgba(245,181,62,.18);
+      border-radius: 50%; transform-style: preserve-3d; transform: translate(-50%,-50%) rotateX(68deg) rotateZ(0deg);
+      box-shadow: 0 0 18px rgba(224,157,44,.07), inset 0 0 18px rgba(224,157,44,.04);
+    }
+    .orbit::before, .orbit::after {
+      content: ""; position: absolute; width: 9px; height: 9px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 25%, #fff2c1, #f6b52d 42%, #a64a08 78%);
+      box-shadow: 0 0 12px #f5b63c, 0 0 28px rgba(245,182,60,.6);
+    }
+    .orbit::before { left: 12%; top: 14%; }
+    .orbit::after { right: 10%; bottom: 12%; width: 6px; height: 6px; }
+    .orbit-one { width: min(82vw, 720px); height: min(82vw, 720px); animation: orbitSpin 24s linear infinite; }
+    .orbit-two { width: min(65vw, 570px); height: min(65vw, 570px); border-color: rgba(255,205,99,.13); animation: orbitSpinBack 31s linear infinite; }
+    .orbit-three { width: min(48vw, 420px); height: min(48vw, 420px); border-style: dashed; border-color: rgba(239,144,27,.15); animation: orbitSpin 38s linear infinite; }
+    .particle {
+      position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #ffc65b;
+      box-shadow: 0 0 12px 3px rgba(255,184,58,.42); opacity: .7;
+      animation: particleFloat 8s ease-in-out infinite;
+    }
+    .particle.p1 { left: 12%; top: 26%; animation-delay: -2s; }
+    .particle.p2 { right: 14%; top: 34%; animation-delay: -5s; }
+    .particle.p3 { left: 22%; bottom: 19%; animation-delay: -3.5s; }
+    .particle.p4 { right: 24%; bottom: 15%; animation-delay: -6s; }
+    @keyframes orbitSpin { from { transform: translate(-50%,-50%) rotateX(68deg) rotateZ(0deg); } to { transform: translate(-50%,-50%) rotateX(68deg) rotateZ(360deg); } }
+    @keyframes orbitSpinBack { from { transform: translate(-50%,-50%) rotateX(68deg) rotateY(24deg) rotateZ(360deg); } to { transform: translate(-50%,-50%) rotateX(68deg) rotateY(24deg) rotateZ(0deg); } }
+    @keyframes ambientBreath { from { opacity: .55; scale: .88; } to { opacity: 1; scale: 1.12; } }
+    @keyframes particleFloat { 0%,100% { transform: translate3d(0,0,0) scale(.8); opacity: .3; } 50% { transform: translate3d(12px,-24px,28px) scale(1.5); opacity: .95; } }
+    .page { width: min(100%, 760px); margin: 0 auto; text-align: center; position: relative; z-index: 1; }
     .topline {
       display: inline-flex; align-items: center; gap: 9px;
       padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px;
@@ -163,24 +201,43 @@
     @media (max-width: 520px) {
       body { padding-left: 14px; padding-right: 14px; }
       .hero { padding-top: 16px; }
-      .logo-wrap { width: min(54vw, 178px); margin-bottom: 7px; }
-      .description { margin-bottom: 22px; font-size: 13px; }
+      .logo-wrap { width: min(39vw, 142px); margin-bottom: 2px; }
+      .hero { padding-top: 8px; }
+      .description { margin: 8px auto 14px; font-size: 12px; line-height: 1.5; }
+      .topline { padding: 6px 11px; font-size: 9px; letter-spacing: 1.5px; }
+      h1 { font-size: clamp(25px, 7vw, 32px); }
+      .subtitle { margin-top: 4px; font-size: clamp(23px, 6vw, 30px); }
       .download-card { padding: 9px; border-radius: 20px; }
-      .download { min-height: 65px; border-radius: 14px; }
-      .details { margin-top: 18px; border-radius: 16px; }
-      .detail { padding: 17px 5px 15px; }
+      .download { min-height: 58px; border-radius: 14px; }
+      .download-card { padding: 7px; }
+      .safe-note { margin-top: 7px; font-size: 10px; }
+      .details { margin-top: 12px; border-radius: 14px; }
+      .detail { padding: 12px 5px 10px; }
       .detail span { font-size: 9px; letter-spacing: .8px; }
-      .features { gap: 9px; }
-      .feature { min-height: 72px; padding: 10px; gap: 9px; font-size: 12px; }
+      .section-title { margin: 18px 0 9px; font-size: 11px; }
+      .features { gap: 8px; }
+      .feature { min-height: 58px; padding: 8px; gap: 8px; font-size: 11px; border-radius: 12px; }
       .feature-icon { width: 34px; height: 34px; flex-basis: 34px; }
-      .install { padding: 15px; }
+      .install { margin-top: 14px; padding: 11px 13px; }
+      .install h2 { margin-bottom: 5px; font-size: 11px; }
+      .install p { font-size: 10px; line-height: 1.5; }
+      footer { margin-top: 13px; font-size: 9px; }
     }
     @media (max-width: 360px) {
       body { padding-left: 11px; padding-right: 11px; }
-      .logo-wrap { width: 154px; }
+      .logo-wrap { width: 126px; }
       .topline { font-size: 9px; letter-spacing: 1.4px; }
       .download { gap: 9px; padding: 15px 10px; font-size: 15px; }
       .feature { font-size: 11px; }
+    }
+    @media (max-height: 760px) and (max-width: 520px) {
+      body { padding-top: max(9px, env(safe-area-inset-top)); padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+      .logo-wrap { width: 112px; }
+      .description { margin-bottom: 10px; }
+      .details { margin-top: 9px; }
+      .section-title { margin-top: 13px; }
+      .install { display: none; }
+      footer { margin-top: 10px; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
@@ -188,6 +245,14 @@
   </style>
 </head>
 <body>
+  <div class="ambient-scene" aria-hidden="true">
+    <div class="ambient-glow"></div>
+    <div class="orbit orbit-one"></div>
+    <div class="orbit orbit-two"></div>
+    <div class="orbit orbit-three"></div>
+    <span class="particle p1"></span><span class="particle p2"></span>
+    <span class="particle p3"></span><span class="particle p4"></span>
+  </div>
   <main class="page">
     <div class="topline">Official Android Application</div>
     <section class="hero" aria-labelledby="page-title">
