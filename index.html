@@ -160,16 +160,24 @@
     .safe-note { margin: 12px 0 2px; color: #b9ad9d; font-size: 12px; letter-spacing: .02em; }
 
 
-    .market-board{max-width:660px;margin:14px auto 0;padding:13px;border:1px solid rgba(235,164,54,.24);border-radius:18px;background:linear-gradient(145deg,rgba(35,24,14,.94),rgba(13,12,10,.96));box-shadow:0 14px 34px rgba(0,0,0,.28);text-align:left}
-    .market-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 2px 10px}
-    .market-heading h2{margin:0;color:#f6d58e;font-size:13px;letter-spacing:1.5px;text-transform:uppercase}
-    .market-heading span{color:#a99b86;font-size:10px}
-    .market-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 8px}
-    .market-item{min-width:0;display:flex;justify-content:space-between;align-items:center;gap:7px;padding:8px 10px;border:1px solid rgba(255,255,255,.055);border-radius:10px;background:rgba(255,255,255,.035)}
-    .market-item b{overflow:hidden;color:#eee6d9;font-size:11px;text-overflow:ellipsis;white-space:nowrap}
-    .market-item time{flex:0 0 auto;color:#ffc65b;font-size:10px;font-weight:800;white-space:nowrap}
-    .market-note{margin:9px 2px 0;color:#928779;font-size:9px;line-height:1.45}
-\n    .details {
+    .market-board {
+      max-width: 660px; margin: 18px auto 0; padding: 18px;
+      border: 1px solid var(--line); border-radius: 20px;
+      background: linear-gradient(145deg, rgba(32,23,14,.96), rgba(15,13,11,.96));
+      box-shadow: 0 16px 38px rgba(0,0,0,.28); text-align: left;
+    }
+    .market-header { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:14px; }
+    .market-title { margin:0; color:#f5d58c; font-size:15px; font-weight:850; letter-spacing:1.2px; text-transform:uppercase; }
+    .market-subtitle { margin:5px 0 0; color:var(--muted); font-size:11px; line-height:1.5; }
+    .timezone { flex:0 0 auto; padding:6px 9px; border:1px solid rgba(246,196,69,.2); border-radius:999px; color:#f5d58c; background:rgba(246,196,69,.07); font-size:10px; font-weight:800; }
+    .market-table { width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border:1px solid rgba(255,255,255,.07); border-radius:12px; }
+    .market-table th { padding:9px 11px; color:#a99f92; background:rgba(255,255,255,.045); font-size:9px; font-weight:800; letter-spacing:1px; text-align:left; text-transform:uppercase; }
+    .market-table td { padding:10px 11px; border-top:1px solid rgba(255,255,255,.055); color:#eee8df; font-size:12px; }
+    .market-table tbody tr:first-child td { border-top:0; }
+    .market-table td:last-child { color:#ffd16b; font-weight:850; font-variant-numeric:tabular-nums; white-space:nowrap; }
+    .market-period { color:#a99f92 !important; font-size:10px !important; }
+    .market-note { margin:11px 2px 0; color:#928779; font-size:9px; line-height:1.55; }
+    .details {
       max-width: 660px; margin: 24px auto 0; display: grid;
       grid-template-columns: repeat(3, 1fr); overflow: hidden;
       border: 1px solid var(--line); border-radius: 20px;
@@ -292,17 +300,26 @@
       <p class="safe-note">Android APK · Direct download</p>
     </section>
 
-    <section class="market-board" aria-label="Satta King market schedule">
-      <div class="market-heading"><h2>Satta King Timing</h2><span>Daily · IST</span></div>
-      <div class="market-grid">
-        <div class="market-item"><b>Desawar</b><time>05:00 AM</time></div>
-        <div class="market-item"><b>Delhi Bazar</b><time>03:00 PM</time></div>
-        <div class="market-item"><b>Shri Ganesh</b><time>04:30 PM</time></div>
-        <div class="market-item"><b>Faridabad</b><time>06:00 PM</time></div>
-        <div class="market-item"><b>Ghaziabad</b><time>09:30 PM</time></div>
-        <div class="market-item"><b>Gali</b><time>11:30 PM</time></div>
+    <section class="market-board" aria-labelledby="market-title">
+      <div class="market-header">
+        <div>
+          <h2 class="market-title" id="market-title">Daily Market Schedule</h2>
+          <p class="market-subtitle">Usual result publication times for listed markets</p>
+        </div>
+        <span class="timezone">IST · UTC+5:30</span>
       </div>
-      <p class="market-note">Indicative result timings in IST; schedules may vary by source or announcement delays.</p>
+      <table class="market-table">
+        <thead><tr><th scope="col">Market</th><th scope="col">Session</th><th scope="col">Result time</th></tr></thead>
+        <tbody>
+          <tr><td>Desawar</td><td class="market-period">Morning</td><td><time datetime="05:00">05:00 AM</time></td></tr>
+          <tr><td>Delhi Bazar</td><td class="market-period">Afternoon</td><td><time datetime="15:00">03:00 PM</time></td></tr>
+          <tr><td>Shri Ganesh</td><td class="market-period">Afternoon</td><td><time datetime="16:30">04:30 PM</time></td></tr>
+          <tr><td>Faridabad</td><td class="market-period">Evening</td><td><time datetime="18:00">06:00 PM</time></td></tr>
+          <tr><td>Ghaziabad</td><td class="market-period">Night</td><td><time datetime="21:30">09:30 PM</time></td></tr>
+          <tr><td>Gali</td><td class="market-period">Late night</td><td><time datetime="23:30">11:30 PM</time></td></tr>
+        </tbody>
+      </table>
+      <p class="market-note">Times are approximate usual publication schedules in IST. Actual result announcements may be delayed or vary by source.</p>
     </section>
 
     <section class="details" aria-label="App information">
